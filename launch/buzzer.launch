@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="topic_io" default="set_digital_output" />
+    <arg name="digital_output" default="1.0" />
+
+    <node name="buzzer" pkg="buzzer" type="buzzer_node.py" output="screen">
+        <param name="topic_io" value="$(arg topic_io)" />
+        <param name="digital_output" value="$(arg digital_output)" />
+    </node>
+    
+</launch>
