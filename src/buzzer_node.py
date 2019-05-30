@@ -74,6 +74,8 @@ class Buzzer:
         self.running = False
         # Variable used to control the loop frequency
         self.time_sleep = 1.0 / self.desired_freq
+        # Variable to control the sound time
+        self.time_enabled = float("inf")
         # State msg to publish
         self.msg_state = State()
         # Timer to publish state
@@ -209,7 +211,7 @@ class Buzzer:
             t2 = time.time()
             tdiff = (t2 - t1)
 
-
+            self.time_enabled -= self.time_sleep
             t_sleep = self.time_sleep - tdiff
 
             if t_sleep > 0.0:
@@ -268,7 +270,7 @@ class Buzzer:
         '''
             Actions performed in ready state
         '''
-        if self.buzzer_enable == True:
+        if self.buzzer_enable == True and self.time_enabled > 0:
             if self.buzzer_freq == 0: # constant beep
                 self.setDigitalOutput(digital_output_buzzer, True)
             elif self.buzzer_freq != 0 :
@@ -400,7 +402,11 @@ class Buzzer:
             response.ret = True
             response.msg = "Buzzer configuration updated"
             self.buzzer_enable = req.enable
-            self.buzzer_freq = req.frequency
+            self.buzzer_freq = req.beep_freq
+            if (req.time_enabled == 0):
+                self.time_enabled = float("inf")
+            else:
+                self.time_enabled = req.time_enabled
             if self.buzzer_freq > 0 and req.enable:
                 self.time_sleep = 1.0 / (self.buzzer_freq * 2)
             else:
