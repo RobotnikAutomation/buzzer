@@ -37,8 +37,7 @@ import rospy
 import time, threading
 
 from robotnik_msgs.msg import State
-from robotnik_msgs.srv import set_digital_output, set_digital_outputRequest
-from buzzer.srv import SetBuzzer, SetBuzzerResponse
+from robotnik_msgs.srv import set_digital_output, set_digital_outputRequest, SetBuzzer, SetBuzzerResponse
 
 DEFAULT_FREQ = 2.0
 MAX_FREQ = 10.0
