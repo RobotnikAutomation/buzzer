@@ -52,7 +52,7 @@ class Buzzer:
         self.node_name = rospy.get_name() #.replace('/','')
         self.desired_freq = args['desired_freq'] 
         self.digital_output = args['digital_output']
-        self.topic_io = args['topic_io']
+        self.service_io = args['service_io']
         # Checks value of freq
         if self.desired_freq <= 0.0 or self.desired_freq > MAX_FREQ:
             rospy.loginfo('%s::init: Desired freq (%f) is not possible. Setting desired_freq to %f'%(self.node_name,self.desired_freq, DEFAULT_FREQ))
@@ -108,7 +108,7 @@ class Buzzer:
         # Service Servers
         rospy.Service('set_buzzer', SetBuzzer, self.setBuzzerSrvCallback)
         # Service Clients
-        self.service_digital_output = rospy.ServiceProxy(self.topic_io, set_digital_output)
+        self.service_digital_output = rospy.ServiceProxy(self.service_io, set_digital_output)
 
         self.ros_initialized = True
 
