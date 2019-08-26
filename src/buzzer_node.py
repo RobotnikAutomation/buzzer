@@ -397,7 +397,7 @@ class Buzzer:
     """    
     def setBuzzerSrvCallback(self, req):
         response = SetBuzzerResponse()
-        if self.buzzer_freq <= MAX_FREQ : # Intermitent beep start every 2/buzzer_freq. One cycle with beep and one without
+        if req.beep_freq <= MAX_FREQ : # Intermitent beep start every 2/buzzer_freq. One cycle with beep and one without
             response.ret = True
             response.msg = "Buzzer configuration updated"
             self.buzzer_enable = req.enable
@@ -443,7 +443,7 @@ def main():
     
       'topic_state': 'state',
       'desired_freq': DEFAULT_FREQ,
-      'topic_io': "set_digital_output",
+      'service_io': "set_digital_output",
       'digital_output': 1
 
     }
